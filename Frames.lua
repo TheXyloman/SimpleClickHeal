@@ -658,10 +658,23 @@ function SCH:UpdateUnitForAnyButton(btn, unit, forcePriority)
 end
 
 function SCH:UpdateUnit(unit)
-  local b = self.unitToButton[unit]
-  if not b or not b.bar then return end
-  if not UnitExists(unit) then return end
-  self:UpdateUnitForAnyButton(b, unit, false)
+  if not unit or not UnitExists(unit) then return end
+
+  -- Main window button
+  do
+    local b = self.unitToButton and self.unitToButton[unit]
+    if b and b.bar then
+      self:UpdateUnitForAnyButton(b, unit, false)
+    end
+  end
+
+  -- Priority window button (if this unit is currently shown there)
+  do
+    local pb = self.priorityUnitToButton and self.priorityUnitToButton[unit]
+    if pb and pb.bar then
+      self:UpdateUnitForAnyButton(pb, unit, true)
+    end
+  end
 end
 
 function SCH:UpdateButtonUnit(b)
@@ -681,9 +694,7 @@ end
 
 function SCH:OnUnitNameUpdate(_, unit)
   if not unit then return end
-  if self.unitToButton[unit] then
-    self:UpdateUnit(unit)
-  end
+  self:UpdateUnit(unit)
 end
 
 function SCH:OnUnitHealth(_, unit)
@@ -1053,6 +1064,10 @@ function SCH:RefreshPriorityFrame()
     self:CreatePriorityFrame()
   end
 
+  -- Unit-token -> priority button mapping so UNIT_HEALTH updates can refresh the priority window.
+  self.priorityUnitToButton = self.priorityUnitToButton or {}
+  wipe(self.priorityUnitToButton)
+
   local showFrame = self.db.profile.priority.showFrame
   if not showFrame then
     self.priorityFrame:Hide()
@@ -1102,6 +1117,7 @@ function SCH:RefreshPriorityFrame()
           btn:Show()
           btn.unit = unit
           btn:SetAttribute("unit", unit)
+          self.priorityUnitToButton[unit] = btn
           self:UpdateUnitForAnyButton(btn, unit, true)
         end
       end

@@ -1,5 +1,14 @@
 # SimpleClickHeal ✨
 
+<h1>⚠️ Project Status: Moved to SimpleFrames</h1>
+
+> [!WARNING]
+> <h2>SimpleClickHeal is no longer in active development.</h2>
+>
+> <p><strong>Work has moved to the new and improved <a href="https://github.com/TheXyloman/SimpleFrames">TheXyloman/SimpleFrames</a> project.</strong></p>
+
+---
+
 A clean, grid-based click-to-heal addon for World of Warcraft Classic TBC Anniversary. Fast setup, compact frames, and a focused priority window for the targets that matter.
 
 ---
@@ -115,7 +124,7 @@ Default resurrection spell by class:
 ---
 
 ## Notes ⚠️
-- This addon is under active development and has no planned final release.
+- This addon is no longer in active development. Work has moved to [TheXyloman/SimpleFrames](https://github.com/TheXyloman/SimpleFrames).
 - Layout, bindings, and roster changes are deferred while in combat.
 
 ---
